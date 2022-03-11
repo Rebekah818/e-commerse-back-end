@@ -1,18 +1,17 @@
-// import models
-const Product = require('./Product');
-const Category = require('./Category');
-const Tag = require('./Tag');
-const ProductTag = require('./ProductTag');
-const { DataTypes } = require('sequelize/types');
+//import sequelize packages
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection.js');
 
 //product model
+class Product extends Model {}
+
 //define the columns
 Product.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNULL: false,
-      primarykey: true,
+      allowNull: false,
+      primaryKey: true,
       autoIncrement: true
     },
     product_name: {
@@ -42,13 +41,14 @@ Product.init(
       }
     }
   },
-  
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'product',
+  }
 )
 
 
-module.exports = {
-  Product,
-  Category,
-  Tag,
-  ProductTag,
-};
+module.exports = Product;
